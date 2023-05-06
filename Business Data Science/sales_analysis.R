@@ -243,8 +243,8 @@ bike_orderlines_wrangled3_tbl <- bike_orderlines_joined_tbl %>%
   summarise(total_revenue = sum(revenue))
 
 # Plot the data using facet_wrap
-for (state in unique(bike_orderlines_wrangled_tbl3$location)) {
-  p <- ggplot(filter(bike_orderlines_wrangled_tbl3, location == state),
+for (state in unique(bike_orderlines_wrangled3_tbl$location)) {
+  p <- ggplot(filter(bike_orderlines_wrangled3_tbl, location == state),
               aes(x = year, y = total_revenue)) +
     geom_col() +
     labs(title = paste("Sales in", state),
