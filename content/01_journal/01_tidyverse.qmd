@@ -228,12 +228,12 @@ Part F is the most interesting bit here since this is the ultimate goal of any D
 
 The results of the first visualization are shown below which shows the trend line of the sales by year analysis. 
 What we can tell is that the trend line is positive and that sales continously rose from 2016 to 2019 barring the year 2018
-![Caption](../../assets/img/sales_by_year_plot.png)
+![Revenue by Year](../../assets/img/sales_by_year_plot.png)
 The results of the second visualization are shown below which shows the revenue by year 
 and by category simultaneously. We can see that Road and Mountain bikes are best sellers regardless of year
 and that demand for them is always high
 
-![Caption](../../assets/img/revenue_by_year_and_category.png)
+![Revenue by Year and Main Category](../../assets/img/revenue_by_year_and_category.png)
 Part 2:
 
 This next part is the challenge from the tidyverse chapter.
@@ -277,7 +277,7 @@ located in the eastern part of North Rhine-Westphalia, is also known for its hil
 scenic landscapes. Additionally, there are several other smaller mountain ranges in the state, 
 including the Ebbegebirge, the Wiehengebirge, and the Teutoburg Forest.
 
-![Caption](../../assets/img/sales_by_state.png)
+![Total Revenue by State](../../assets/img/sales_by_state.png)
 
 The second and last part of the tidy verse challenge is as follows:
 
@@ -310,7 +310,7 @@ ggsave("sales_by_location_and_year.png", dpi = 300)
 
 The results are below:
 
-![Caption](../../assets/img/sales_year_state/sales_by_location_and_year.png)
+![Sales by Location and Year](../../assets/img/sales_year_state/sales_by_location_and_year.png)
 
 
 This image shows that aggregated annual sales in North Rhine Westphalia are dominant whe
