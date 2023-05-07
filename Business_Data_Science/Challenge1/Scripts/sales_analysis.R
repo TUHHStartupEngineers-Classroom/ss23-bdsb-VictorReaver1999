@@ -23,16 +23,16 @@ bikeshops_tbl  <- read_excel("ds_data/01_bike_sales/01_raw_data/bikeshops.xlsx")
 
 
 # 3.0 Examining Data ----
-print("bikes_tbl")
-bikes_tbl
-
-
-print("orderlines_tbl")
-orderlines_tbl
-
-
-print("bikeshops_tbl")
-bikeshops_tbl
+# print("bikes_tbl")
+# bikes_tbl
+# 
+# 
+# print("orderlines_tbl")
+# orderlines_tbl
+# 
+# 
+# print("bikeshops_tbl")
+# bikeshops_tbl
 
 
 # 4.0 Joining Data ----
@@ -47,8 +47,8 @@ glimpse(bike_orderlines_joined_tbl)
 
 
 # 5.0 Wrangling Data ----
-print("bike orderlines joined category col, first 20 rows")
-head(bike_orderlines_joined_tbl$category, n=20)
+# print("bike orderlines joined category col, first 20 rows")
+# head(bike_orderlines_joined_tbl$category, n=20)
 # All actions are chained with the pipe already. You can perform each step separately and use glimpse() or View() to validate your code. Store the result in a variable at the end of the steps.
 bike_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
   # 5.1 Separate category name
@@ -83,8 +83,8 @@ bike_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
   rename(bikeshop = name) %>%
   set_names(names(.) %>% str_replace_all("\\.", "_"))
 
-print("Bike OrderLines Wrangled Table")
-head(bike_orderlines_wrangled_tbl, n=10)
+# print("Bike OrderLines Wrangled Table")
+# head(bike_orderlines_wrangled_tbl, n=10)
 
 
 # 6.0 Business Insights ----
@@ -112,8 +112,8 @@ sales_by_year_tbl <- bike_orderlines_wrangled_tbl %>%
                                      prefix = "",
                                      suffix = " €"))
 
-print("Sales By Year Table")
-sales_by_year_tbl
+# print("Sales By Year Table")
+# sales_by_year_tbl
 
 # Step 2 - Visualize
 
@@ -141,7 +141,7 @@ sales_by_year_tbl %>%
     y = "Revenue"
   )
 
-ggsave("sales_by_year_plot.png", width = 10, height = 8, dpi = 300)
+# ggsave("sales_by_year_plot.png", width = 10, height = 8, dpi = 300)
 
 
 # 6.2 Sales by Year and Category 2 ----
@@ -164,8 +164,8 @@ sales_by_year_cat_1_tbl <- bike_orderlines_wrangled_tbl %>%
                                      prefix = "",
                                      suffix = " €"))
 
-print("Sales By Year Category1 Table")
-sales_by_year_cat_1_tbl
+# print("Sales By Year Category1 Table")
+# sales_by_year_cat_1_tbl
 
 # Step 2 - Visualize
 sales_by_year_cat_1_tbl %>%
@@ -189,7 +189,7 @@ sales_by_year_cat_1_tbl %>%
     subtitle = "Each product category has an upward trend",
     fill = "Main category" # Changes the legend name
   )
-ggsave("revenue_by_year_and_category.png", width = 10, height = 8, dpi = 300)
+# ggsave("revenue_by_year_and_category.png", width = 10, height = 8, dpi = 300)
 
 
 # 7.0 Writing Files ----
@@ -200,12 +200,12 @@ ggsave("revenue_by_year_and_category.png", width = 10, height = 8, dpi = 300)
 # library("writexl")
 # bike_orderlines_wrangled_tbl %>%
 #   write_xlsx("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines.xlsx")
-#
-# # 7.2 CSV ----
+# 
+# # # 7.2 CSV ----
 # bike_orderlines_wrangled_tbl %>%
 #   write_csv("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines.csv")
-#
-# # 7.3 RDS ----
+# 
+# # # 7.3 RDS ----
 # bike_orderlines_wrangled_tbl %>%
 #   write_rds("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines.rds")
 
@@ -229,32 +229,26 @@ bike_orderlines_wrangled2_tbl <- bike_orderlines_joined_tbl %>%
 # print("bike_orderlines_wrangled2_tbl")
 # head(bike_orderlines_wrangled2_tbl, n=10)
 
-ggsave("sales_by_state.png", width = 10, height = 8, dpi = 300)
+# ggsave("sales_by_state.png", width = 10, height = 8, dpi = 300)
+
 
 # Challenge Part 2
-# Create a list to store the plots
-plots <- list()
-
 # Group the data by location (state) and year, and calculate the total revenue
 bike_orderlines_wrangled3_tbl <- bike_orderlines_joined_tbl %>%
+  separate(location, into = c("city", "state"), sep = ", ") %>%
   mutate(year = year(order.date)) %>%
   mutate(revenue = quantity * price) %>%
-  group_by(location, year) %>%
+  group_by(state, year) %>%
   summarise(total_revenue = sum(revenue))
 
 # Plot the data using facet_wrap
-for (state in unique(bike_orderlines_wrangled_tbl3$location)) {
-  p <- ggplot(filter(bike_orderlines_wrangled_tbl3, location == state),
-              aes(x = year, y = total_revenue)) +
-    geom_col() +
-    labs(title = paste("Sales in", state),
-         x = "Year",
-         y = "Total Revenue") + scale_y_continuous(labels = comma) +
-    theme(plot.title = element_text(hjust = 0.5))
-  plots[[state]] <- p
-}
+ggplot(bike_orderlines_wrangled3_tbl, aes(x = year, y = total_revenue)) +
+  geom_col() +
+  labs(x = "Year", y = "Total Revenue") +
+  facet_wrap(~ state, ncol = 4) +
+  scale_y_continuous(labels = comma) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Sales by Location and Year")
 
-# Save the plots as PNG files
-for (state in names(plots)) {
-  ggsave(paste0(state, ".png"), plots[[state]], dpi = 300)
-}
+# Save the plot as a PNG file
+ggsave("sales_by_location_and_year.png", dpi = 300)

@@ -1,98 +1,393 @@
 ---
-title: "Tidyverse"
-author: "Joschka Schwarz"
+title: "Tidyverse and Challenge 1"
+author: "Fadel Victor Shanaa"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
 
-This is a `.qmd` file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a \# in front of your text, it will create a top level-header.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-# Text Formatting
-
-*italics* and **bold**
-
-superscript^2^ / subscript~2~
-
-~~strikethrough~~
-
-`verbatim code`
-
-> Blockquote
-
-# Headings
-
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-###### Header 6
-
-# Links & Images
-
-<https://quarto.org>
-
-[Quarto](https://quarto.org)
-
-![Caption](../../assets/img/elephant.png)
-
-[![Caption](../../assets/img/elephant.png)](https://quarto.org)
-
-[![Caption](../../assets/img/elephant.png)](https://quarto.org "An elephant")
-
-
-# Lists
-
-* unordered list
-    + sub-item 1
-    + sub-item 2
-        - sub-sub-item 1
-        
-*   item 2
-
-    Continued (indent 4 spaces)
-    
-    
-1. ordered list
-2. item 2
-    i) sub-item 1
-         A.  sub-sub-item 1
-         
-(@)  A list whose numbering
-
-continues after
-
-(@)  an interruption
-
-# Tables
-
-| Right | Left | Default | Center |
-|------:|:-----|---------|:------:|
-|   12  |  12  |    12   |    12  |
-|  123  |  123 |   123   |   123  |
-|    1  |    1 |     1   |     1  |
-
-# Source Code
-
-Use ``` to delimit blocks of source code:
-
-```
-code
-```
-
-Add a language to syntax highlight code blocks:
+Part 1: Introduction to the Tidyverse Base Code + Results
 
 ```{r}
-1 + 1
+# Data Science at TUHH ------------------------------------------------------
+# SALES ANALYSIS ----
+
+# 1.0 Load libraries ----
+library(tidyverse)
+library(readxl)
+library(writexl)
+library(scales)
+library(ggplot2)
+library(lubridate)
+
+# 2.0 Importing Files ----
+# A good convention is to use the file name and suffix it with tbl for the data structure tibble
+bikes_tbl <- read_excel("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\Business_Data_Science\\ds_data\\01_bike_sales\\01_raw_data\\bikes.xlsx")
+
+orderlines_tbl <- read_excel("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\Business_Data_Science\\ds_data\\01_bike_sales\\01_raw_data\\orderlines.xlsx")
+
+bikeshops_tbl  <- read_excel("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\Business_Data_Science\\ds_data\\01_bike_sales\\01_raw_data\\bikeshops.xlsx")
+
+
+# 3.0 Examining Data ----
+print("bikes_tbl")
+bikes_tbl
+
+
+print("orderlines_tbl")
+orderlines_tbl
+
+
+print("bikeshops_tbl")
+bikeshops_tbl
+
+
+# 4.0 Joining Data ----
+left_join(orderlines_tbl, bikes_tbl, by = c("product.id" = "bike.id"))
+
+bike_orderlines_joined_tbl <- orderlines_tbl %>%
+  left_join(bikes_tbl, by = c("product.id" = "bike.id")) %>%
+  left_join(bikeshops_tbl, by = c("customer.id" = "bikeshop.id"))
+
+print("bike orderlines joined tbl")
+glimpse(bike_orderlines_joined_tbl)
+
+
+# 5.0 Wrangling Data ----
+print("bike orderlines joined category col, first 20 rows")
+head(bike_orderlines_joined_tbl$category, n=20)
+# All actions are chained with the pipe already. You can perform each step separately and use glimpse() or View() to validate your code. Store the result in a variable at the end of the steps.
+bike_orderlines_wrangled_tbl <- bike_orderlines_joined_tbl %>%
+  # 5.1 Separate category name
+  separate(col    = category,
+           into   = c("category.1", "category.2", "category.3"),
+           sep    = " - ") %>%
+
+  # 5.2 Add the total price (price * quantity)
+  # Add a column to a tibble that uses a formula-style calculation of other columns
+  mutate(total.price = price * quantity) %>%
+
+  # 5.3 Optional: Reorganize. Using select to grab or remove unnecessary columns
+  # 5.3.1 by exact column name
+  select(-...1, -gender) %>%
+
+  # 5.3.2 by a pattern
+  # You can use the select_helpers to define patterns.
+  # Type ?ends_with and click on Select helpers in the documentation
+  select(-ends_with(".id")) %>%
+
+  # 5.3.3 Actually we need the column "order.id". Let's bind it back to the data
+  bind_cols(bike_orderlines_joined_tbl %>% select(order.id)) %>%
+
+  # 5.3.4 You can reorder the data by selecting the columns in your desired order.
+  # You can use select_helpers like contains() or everything()
+  select(order.id, contains("order"), contains("model"), contains("category"),
+         price, quantity, total.price,
+         everything()) %>%
+
+  # 5.4 Rename columns because we actually wanted underscores instead of the dots
+  # (one at the time vs. multiple at once)
+  rename(bikeshop = name) %>%
+  set_names(names(.) %>% str_replace_all("\\.", "_"))
+
+print("Bike OrderLines Wrangled Table")
+head(bike_orderlines_wrangled_tbl, n=10)
+
+
+# 6.0 Business Insights ----
+# 6.1 Sales by Year ----
+
+library(lubridate)
+# Step 1 - Manipulate
+sales_by_year_tbl <- bike_orderlines_wrangled_tbl %>%
+
+  # Select columns
+  select(order_date, total_price) %>%
+
+  # Add year column
+  mutate(year = year(order_date)) %>%
+
+  # Grouping by year and summarizing sales
+  group_by(year) %>%
+  summarize(sales = sum(total_price)) %>%
+
+  # Optional: Add a column that turns the numbers into a currency format
+  # (makes it in the plot optically more appealing)
+  # mutate(sales_text = scales::dollar(sales)) <- Works for dollar values
+  mutate(sales_text = scales::dollar(sales, big.mark = ".",
+                                     decimal.mark = ",",
+                                     prefix = "",
+                                     suffix = " €"))
+
+print("Sales By Year Table")
+sales_by_year_tbl
+
+# Step 2 - Visualize
+
+sales_by_year_tbl %>%
+
+  # Setup canvas with the columns year (x-axis) and sales (y-axis)
+  ggplot(aes(x = year, y = sales)) +
+
+  # Geometries
+  geom_col(fill = "#2DC6D6") + # Use geom_col for a bar plot
+  geom_label(aes(label = sales_text)) + # Adding labels to the bars
+  geom_smooth(method = "lm", se = FALSE) + # Adding a trendline
+
+  # Formatting
+  # scale_y_continuous(labels = scales::dollar) + # Change the y-axis.
+  # Again, we have to adjust it for euro values
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".",
+                                                    decimal.mark = ",",
+                                                    prefix = "",
+                                                    suffix = " €")) +
+  labs(
+    title    = "Revenue by year",
+    subtitle = "Upward Trend",
+    x = "", # Override defaults for x and y
+    y = "Revenue"
+  )
+
+ggsave("sales_by_year_plot.png", width = 10, height = 8, dpi = 300)
+
+
+# 6.2 Sales by Year and Category 2 ----
+
+# Step 1 - Manipulate
+sales_by_year_cat_1_tbl <- bike_orderlines_wrangled_tbl %>%
+
+  # Select columns and add a year
+  select(order_date, total_price, category_1) %>%
+  mutate(year = year(order_date)) %>%
+
+  # Group by and summarize year and main catgegory
+  group_by(year, category_1) %>%
+  summarise(sales = sum(total_price)) %>%
+  ungroup() %>%
+
+  # Format $ Text
+  mutate(sales_text = scales::dollar(sales, big.mark = ".",
+                                     decimal.mark = ",",
+                                     prefix = "",
+                                     suffix = " €"))
+
+print("Sales By Year Category1 Table")
+sales_by_year_cat_1_tbl
+
+# Step 2 - Visualize
+sales_by_year_cat_1_tbl %>%
+
+  # Set up x, y, fill
+  ggplot(aes(x = year, y = sales, fill = category_1)) +
+
+  # Geometries
+  geom_col() + # Run up to here to get a stacked bar plot
+
+  # Facet
+  facet_wrap(~ category_1) +
+
+  # Formatting
+  scale_y_continuous(labels = scales::dollar_format(big.mark = ".",
+                                                    decimal.mark = ",",
+                                                    prefix = "",
+                                                    suffix = " €")) +
+  labs(
+    title = "Revenue by year and main category",
+    subtitle = "Each product category has an upward trend",
+    fill = "Main category" # Changes the legend name
+  )
+ggsave("revenue_by_year_and_category.png", width = 10, height = 8, dpi = 300)
+
+
+# 7.0 Writing Files ----
+
+# 7.1 Excel ----
+
+bike_orderlines_wrangled_tbl %>%
+  write_xlsx("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\Business_Data_Science\\ds_data\\01_bike_sales\\02_wrangled_data\\bike_orderlines.xlsx")
+
+# # 7.2 CSV ----
+bike_orderlines_wrangled_tbl %>%
+  write_csv("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\Business_Data_Science\\ds_data\\01_bike_sales\\02_wrangled_data\\bike_orderlines.csv")
+
+# # 7.3 RDS ----
+bike_orderlines_wrangled_tbl %>%
+  write_rds("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\Business_Data_Science\\ds_data\\01_bike_sales\\02_wrangled_data\\bike_orderlines.rds")
+
 ```
 
+This is the base code of the Tidyverse section of this course. 
+The steps are as follows:
+a) Load libraries
+b) Load the raw data
+c) Examine data
+d) Join data as per the instructions
+e) Wrangle it in order to prepare it for analysis
+f) Extract business insights through visualization
+g) Store the wrangled data as xlsx, csv, and rds files
+
+Part F is the most interesting bit here since this is the ultimate goal of any Data Analysis project which is extracting insights and telling a story
+
+The results of the first visualization are shown below which shows the trend line of the sales by year analysis. 
+What we can tell is that the trend line is positive and that sales continously rose from 2016 to 2019 barring the year 2018
+![Caption](../../assets/img/sales_by_year_plot.png)
+The results of the second visualization are shown below which shows the revenue by year 
+and by category simultaneously. We can see that Road and Mountain bikes are best sellers regardless of year
+and that demand for them is always high
+
+![Caption](../../assets/img/revenue_by_year_and_category.png)
+Part 2:
+
+This next part is the challenge from the tidyverse chapter.
+The first part of the challenge is as follows:
+
+**Analyze the sales by location (state) with a bar plot. Since state and city are multiple features (variables), they should be split. Which state has the highes revenue? Replace your bike_orderlines_wrangled_tbl object with the newly wrangled object (with the columns state and city).**
+
+**Hint: Add + theme(axis.text.x = element_text(angle = 45, hjust = 1)) to your plotting code to rotate your x-axis labels. Probably you have to resize the viewer pane to show the entire plot. For your website, try different values for fig.width and fig.height in your markdown document.**
 ```{r}
-cars
+# 8.0 Challenge #1 
+
+# Challenge Part 1
+bike_orderlines_wrangled2_tbl <- bike_orderlines_joined_tbl %>%
+  separate(location, into = c("city", "state"), sep = ", ") %>%
+  group_by(state) %>%
+  summarize(total_revenue = sum(price * quantity)) %>%
+  arrange(desc(total_revenue)) %>%
+  ggplot(aes(x = state, y = total_revenue)) +
+  geom_bar(stat = "identity", fill = "#0072B2") +
+  xlab("State") +
+  ylab("Total Revenue") +
+  ggtitle("Total Revenue by State") +
+  scale_y_continuous(labels = comma) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# print("bike_orderlines_wrangled2_tbl")
+# head(bike_orderlines_wrangled2_tbl, n=10)
+
+ggsave("sales_by_state.png", width = 10, height = 8, dpi = 300)
+
 ```
 
+The results of that challenge are seen below. We split the location by city and state
+and then grouped all the sales data by state. The state that sold the most bikes
+is North Rhine Westphalia. 
+
+This could be caused by the presence of mountains and hills in North Rhine-Westphalia. 
+The highest mountain in the state is the Langenberg, which is part 
+of the Rothaar Mountains and has an elevation of 843 meters (2,766 feet). The Sauerland region, 
+located in the eastern part of North Rhine-Westphalia, is also known for its hilly terrain and 
+scenic landscapes. Additionally, there are several other smaller mountain ranges in the state, 
+including the Ebbegebirge, the Wiehengebirge, and the Teutoburg Forest.
+
+![Caption](../../assets/img/sales_by_state.png)
+
+The second and last part of the tidy verse challenge is as follows:
+
+**Analyze the sales by location and year (facet_wrap). Because there are 12 states with bike stores, you should get 12 plots**
+
+The code is below. I folloed
+
 ```{r}
-plot(cars)
+# Challenge Part 2
+# Group the data by location (state) and year, and calculate the total revenue
+bike_orderlines_wrangled3_tbl <- bike_orderlines_joined_tbl %>%
+  separate(location, into = c("city", "state"), sep = ", ") %>%
+  mutate(year = year(order.date)) %>%
+  mutate(revenue = quantity * price) %>%
+  group_by(state, year) %>%
+  summarise(total_revenue = sum(revenue))
+
+# Plot the data using facet_wrap
+ggplot(bike_orderlines_wrangled3_tbl, aes(x = year, y = total_revenue)) +
+  geom_col() +
+  labs(x = "Year", y = "Total Revenue") +
+  facet_wrap(~ state, ncol = 4) +
+  scale_y_continuous(labels = comma) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Sales by Location and Year")
+
+# Save the plot as a PNG file
+ggsave("sales_by_location_and_year.png", dpi = 300)
 ```
+
+The results are below:
+
+![Caption](../../assets/img/sales_year_state/sales_by_location_and_year.png)
+
+
+This image shows that aggregated annual sales in North Rhine Westphalia are dominant whe
+compared to other states for reasons outlined earlier. 
+
+This marks the end of the Tidyverse Chapter and Challenge.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
