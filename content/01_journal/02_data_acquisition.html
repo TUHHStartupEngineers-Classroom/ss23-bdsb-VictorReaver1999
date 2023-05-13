@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.2.335">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-<meta name="author" content="Joschka Schwarz">
-
+<meta name="author" content="Fadel Victor Shanaa">
 <title>MyLabJournal - Data Acquisition</title>
 <style>
 code{white-space: pre-wrap;}
@@ -21,8 +18,70 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
-
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
@@ -42,8 +101,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -61,17 +119,13 @@ ul.task-list li input[type="checkbox"] {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
+}</script><link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">MyLabJournal</span>
@@ -82,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -90,8 +144,8 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-journal" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Journal</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-journal">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-journal">
+<li>
     <a class="dropdown-item" href="../../content/01_journal/01_tidyverse.html">
  <span class="dropdown-text">01 Tidyverse</span></a>
   </li>  
@@ -108,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">04 Data Visualization</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../content/02_notes/05_class_notes.html">
  <span class="menu-text">Class notes</span></a>
@@ -118,26 +172,20 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Links</span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
+<div class="quarto-toggle-container">
                   <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
               </div>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Data Acquisition</h1>
 </div>
 
@@ -148,7 +196,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Joschka Schwarz </p>
+             <p>Fadel Victor Shanaa </p>
           </div>
   </div>
     
@@ -157,26 +205,941 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
-</header>
+</header><p>Challenge 1</p>
+<p><strong>Get some data via an API. There are millions of providers, that offer API access for free and have good documentation about how to query their service. You just have to google them. You can use whatever service you want. For example, you can get data about your listening history (spotify), get data about flights (skyscanner) or just check the weather forecast. Print the data in a readable format, e.g.&nbsp;a table if you want, you could also plot it</strong></p>
+<p><em>For this challenge, I decided to obtain netflix movie data. I replaced all missing ratings with N/A. I kept it simple to 4 columns: title, year, rating, synopsis</em></p>
+<div class="cell" data-hash="02_data_acquisition_cache/html/unnamed-chunk-1_b196ecd8280cfd517ebfee10799456ff">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># load the libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(httr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(markdown)</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#specify the url and what we are accessing</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>url <span class="ot">&lt;-</span> <span class="st">"https://unogs-unogs-v1.p.rapidapi.com/search/titles"</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a>queryString <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-12"><a href="#cb1-12"></a>  <span class="at">order_by =</span> <span class="st">"date"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="at">type =</span> <span class="st">"movie"</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co"># retrieve the API Key</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>api_key <span class="ot">=</span> <span class="fu">Sys.getenv</span>(<span class="st">"X-RapidAPI-Key"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="co"># Get the response as a JSON output</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>response <span class="ot">&lt;-</span> <span class="fu">VERB</span>(<span class="st">"GET"</span>, url, <span class="at">query =</span> queryString, <span class="fu">add_headers</span>(<span class="st">'X-RapidAPI-Key'</span> <span class="ot">=</span> api_key, <span class="st">'X-RapidAPI-Host'</span> <span class="ot">=</span> <span class="st">'unogs-unogs-v1.p.rapidapi.com'</span>), <span class="fu">content_type</span>(<span class="st">"application/octet-stream"</span>))</span>
+<span id="cb1-21"><a href="#cb1-21"></a></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="co"># Convert that JSON response to a list</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>response_list <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="fu">content</span>(response, <span class="st">"text"</span>))</span>
+<span id="cb1-24"><a href="#cb1-24"></a></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="co"># Convert extract the dataframe of results we want</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>movies_df <span class="ot">&lt;-</span> response_list[[<span class="dv">2</span>]]</span>
+<span id="cb1-27"><a href="#cb1-27"></a></span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="co"># Filter the dataframe</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>movies_df <span class="ot">&lt;-</span> movies_df[, <span class="fu">c</span>(<span class="st">"title"</span>, <span class="st">"year"</span>, <span class="st">"rating"</span>, <span class="st">"synopsis"</span>)]</span>
+<span id="cb1-30"><a href="#cb1-30"></a></span>
+<span id="cb1-31"><a href="#cb1-31"></a><span class="co"># Replace empty ratings with N/A</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>movies_df<span class="sc">$</span>rating <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(movies_df<span class="sc">$</span>rating), <span class="st">"N/A"</span>, movies_df<span class="sc">$</span>rating)</span>
+<span id="cb1-33"><a href="#cb1-33"></a>movies_df<span class="sc">$</span>rating[movies_df<span class="sc">$</span>rating <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="st">"N/A"</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a></span>
+<span id="cb1-35"><a href="#cb1-35"></a><span class="co"># create a table with kable</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a>movies_table <span class="ot">&lt;-</span> <span class="fu">kable</span>(movies_df, <span class="at">format =</span> <span class="st">"markdown"</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">align =</span> <span class="st">"c"</span>, <span class="at">col.names =</span> <span class="fu">toupper</span>(<span class="fu">colnames</span>(movies_df)), <span class="at">space =</span> <span class="st">"small"</span>)</span>
+<span id="cb1-37"><a href="#cb1-37"></a></span>
+<span id="cb1-38"><a href="#cb1-38"></a><span class="co"># Display the Table</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a>movies_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 2%">
+<col style="width: 3%">
+<col style="width: 70%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: center;">TITLE</th>
+<th style="text-align: center;">YEAR</th>
+<th style="text-align: center;">RATING</th>
+<th style="text-align: center;">SYNOPSIS</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">The Sky Above Paris</td>
+<td style="text-align: center;">1991</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Heartbroken Suzanne has sworn off men — until she meets Lucien. But she’s unaware her best friend Marc has also fallen in love with her new flame.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Thiruvin Kural</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">A man with hearing and speech disabilities is drawn into danger when a ruthless gang starts targeting his injured father at a hospital.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Mrs.&nbsp;Chatterjee vs Norway</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">7.4</td>
+<td style="text-align: center;">An immigrant mother from India embarks on a fierce custody battle when Norwegian authorities take her children away from her. Based on a true story.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Royalteen: Princess Margrethe</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">In the wake of her prom scandal, Princess Margrethe longs for normalcy as she struggles to maintain her perfect facade while dealing with family drama.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">¡Que viva México!</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">After his miner grandfather's death, Pancho travels with his wife and kids to his hometown, where chaos ensues with his relatives over the inheritance.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Travelling thru time!</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Five young friends embark on a journey of adventure and magic in a quest to stop a villainous tycoon from making their parents work day and night.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Bros</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">6.3</td>
+<td style="text-align: center;">A prickly podcaster surprises himself when he meets a man who might be his perfect match — if only they can both get over their hang-ups about romance.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Big Dreams</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">8.9</td>
+<td style="text-align: center;">Energized by the Czech Republic's 1998 Olympic hockey victory, an 11-year-old dreamer and his pals form a team to take on rivals from a nearby village.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">One Night Stand</td>
+<td style="text-align: center;">2021</td>
+<td style="text-align: center;">5.9</td>
+<td style="text-align: center;">A young man's trip to attend a funeral and a wedding on the same day leads to a journey of self-discovery when he's captivated by a chance encounter.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Jakarta vs Everybody</td>
+<td style="text-align: center;">2020</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">One man's dream to become an actor leads him to the big city of Jakarta — but the path to stardom isn't as easy as he originally thought.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Aum!</td>
+<td style="text-align: center;">2021</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">A group of Indonesian activists discreetly fight for reform while under the rule and watchful eye of oppressive authorities.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">You &amp; Me &amp; Me</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">7.7</td>
+<td style="text-align: center;">Twin sisters You and Me share an intimate bond like no other — until a charming teenager named Mark abruptly enters their lives.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Arini by Love.inc</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">After dedicating years of service at a matchmaking company, Arini tries to piece together her mysterious past — and memories of a former client.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Soul Snatcher</td>
+<td style="text-align: center;">2020</td>
+<td style="text-align: center;">5.3</td>
+<td style="text-align: center;">In search of a divine pill to achieve immortality, a wily fox spirit travels to the human world, where he befriends an innocent scholar.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Die Känguru-Chroniken</td>
+<td style="text-align: center;">2020</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">A musician's life turns upside down when a talking kangaroo with communist leanings moves into his apartment and sparks his awakening as an activist.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">The Unborn Soul</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">When a family secret comes back to haunt an expectant mother, she must face her past as her unborn child is put at risk.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Brigade Anti-Gangs</td>
+<td style="text-align: center;">1966</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">After a task force manages to arrest a notorious gang's boss, its members kidnap the head inspector’s brother in order to obtain their leader’s freedom.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Hero</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">7.9</td>
+<td style="text-align: center;">Family man turned freedom fighter An Jung-geun vows to assassinate resident-general Ito Hirobumi and liberate occupied Korea in this musical drama.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Hannah Gadsby: Something Special</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">A panicky proposal. A novelty wedding cake. A fateful bunny encounter. Hannah Gadsby shares tales of love and marriage in this feel-good comedy special.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">The Subtle Art of Not Giving a F*ck</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">Author Mark Manson explores the human condition and his counterintuitive approach to finding true joy in this documentary based on his bestselling book.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">The Tunnel Gang</td>
+<td style="text-align: center;">2016</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">After being trapped in a tunnel for days, a colorful group of survivors strikes up a unique friendship and soon land in awkward and hilarious situations.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Shooters</td>
+<td style="text-align: center;">2000</td>
+<td style="text-align: center;">5.4</td>
+<td style="text-align: center;">In this docudrama, non-professionals with criminal backgrounds re-enact ad-libbed scenes of life in Liverpool's underworld.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Superwho?</td>
+<td style="text-align: center;">2021</td>
+<td style="text-align: center;">6.1</td>
+<td style="text-align: center;">After losing his memory in an accident, a struggling actor becomes convinced he's a superhero on an important mission.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">The Pororo Movie: Adventures in The Magical Kingdom</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Pororo and his pals discover a cursed prince stuck as a wooden doll and set off to help him reclaim his kingdom from the evil duke who cast the spell.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">The Marriage Escape</td>
+<td style="text-align: center;">2020</td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">Feeling constrained by his wife of 35 years, an aging veterinarian devises an odd scheme to get away and enjoy some time to himself.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Voices of the New Gen</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Four emerging filmmakers present a collection of gritty short crime dramas and thrillers that reflect Thailand’s social issues and politics.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Project Wolf Hunting</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">6.1</td>
+<td style="text-align: center;">A cargo ship transporting a group of hostile inmates from the Philippines to South Korea erupts into chaos when they join forces to hijack the vessel.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Preuve d'amour</td>
+<td style="text-align: center;">1988</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">After meeting a beautiful and enigmatic woman on a train, a journalist becomes a suspect in a murder and embarks on a dangerous search for the truth.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Forget Me</td>
+<td style="text-align: center;">1994</td>
+<td style="text-align: center;">6.6</td>
+<td style="text-align: center;">Hung up on an ex who's moved on, 20-something Nathalie creates chaos and heartbreak for herself and the people around her as she searches for love.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">How to Keep the Red Lamp Burning</td>
+<td style="text-align: center;">1965</td>
+<td style="text-align: center;">6.5</td>
+<td style="text-align: center;">When a brothel owner gives his telltale red lantern to his top earner, the story of the gift is revealed through the tales of its various keepers.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Wrong Place</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">3.6</td>
+<td style="text-align: center;">A drug kingpin makes a mistake with violent consequences when he threatens the daughter of the former police chief set to testify against him.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">The Order of Things</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">6.4</td>
+<td style="text-align: center;">When family tradition dictates that his big brother must get married first, a frustrated fiancé gives his shy, perennially single sibling a makeover.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">AY: Spotting the Difference</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">In his eclectic debut special, Ayo “AY” Makun hilariously holds forth on eccentric pastors, media bias and the untold wonders of medical payment plans.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Kaiserschmarrndrama</td>
+<td style="text-align: center;">2021</td>
+<td style="text-align: center;">6.9</td>
+<td style="text-align: center;">A dicey murder investigation. A fuming best friend. A chaotic living situation. Village police officer Franz Eberhofer has a lot on his plate right now.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Perched on a Tree</td>
+<td style="text-align: center;">1970</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">An industrialist takes a chance when he reluctantly picks up two hitchhikers. But, after a wrong turn, they all go out on a limb — literally.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Thelma</td>
+<td style="text-align: center;">2011</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">Thelma has an uncanny gift for speed. But to become an athlete, she must navigate a labyrinth of challenges stacked against her and her family.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Deadly Love Poem</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Words of poetry spell certain death when a young woman grows increasingly distraught after a string of unusual murders take place.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Call Me Miles</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">This candid documentary follows an Afrikaans teen on their trans journey as they face self-hate, societal rejection and doubt on a path to healing.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Rowdy Fellow</td>
+<td style="text-align: center;">2014</td>
+<td style="text-align: center;">6.4</td>
+<td style="text-align: center;">After clashing with an officer, a man joins the police force out of spite. In his new post, he takes on a corrupt and powerful local politician.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Thammudu</td>
+<td style="text-align: center;">1999</td>
+<td style="text-align: center;">7.9</td>
+<td style="text-align: center;">The banished son of a respectable family gets the chance to redeem himself when he takes his injured brother's place in a kickboxing tournament.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Three (Telugu)</td>
+<td style="text-align: center;">2012</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">After her husband’s unnatural death, a young widow in search of answers discovers a secret diagnosis and a world of hidden suffering and sacrifice.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Yogi</td>
+<td style="text-align: center;">2007</td>
+<td style="text-align: center;">4.5</td>
+<td style="text-align: center;">Eager to earn money for his widowed mother, a devoted son heads to the big city where a violent encounter turns him into a vigilante bent on justice.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Amrutham Chandamamalo</td>
+<td style="text-align: center;">2014</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">When the opportunity arises to colonize the moon — and expand their business — self-made billionaires Amrutham and Anji become unwitting adventurers.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Coplan Saves His Skin</td>
+<td style="text-align: center;">1968</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">An undercover agent faces killer goons, a strange sculptor and a mysterious doppelgänger when a murder investigation reveals a scheme to end humanity.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Meter</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">After a reluctant cop is promoted, he attempts to sabotage his own rise — until an unexpected clash with a corrupt politician forces a change of heart.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Armageddon Time</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">6.5</td>
+<td style="text-align: center;">A Jewish boy's friendship with his Black classmate reveals sobering truths about race and privilege in this coming-of-age tale set in 1980 New York City.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Katinka</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Swimming champion Katinka Hosszú faces challenges and setbacks in and out of the water during her preparations for the 2020 Tokyo Olympics.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Welcome Home, Bro!</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">When a woman returns home with her writer fiancé, her parents become convinced that he'll write a book about them. Then a family secret surfaces.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">The Point Men</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">4.3</td>
+<td style="text-align: center;">A diplomat and a National Intelligence Service agent launch a mission to rescue Korean tourists held hostage by the Taliban. Based on true events.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Sumodo - The Successors of Samurai</td>
+<td style="text-align: center;">2020</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Two elite wrestlers from rival stables train for combat in this visceral documentary that goes inside the rigorous sport of sumo wrestling.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Romina, My Life</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">A young woman's summer brims with romantic complications when a new connection with a visiting musician stirs up feelings for a former flame.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Tu Jhoothi Main Makkaar</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">6.7</td>
+<td style="text-align: center;">To earn extra cash, Mickey helps couples break up — but life gets complicated when he falls for Tinni, a career woman with an independent streak.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Hope</td>
+<td style="text-align: center;">2020</td>
+<td style="text-align: center;">8.2</td>
+<td style="text-align: center;">When a missing student becomes a suspect in his classmate's murder, his family is torn between hoping he's innocent and hoping he's still alive.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Two Hearts</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">6.6</td>
+<td style="text-align: center;">On the cusp of a life-changing meeting, a musically talented woman must track down her notebook of lyrics from the rap star she thinks possesses it.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">23 Walks</td>
+<td style="text-align: center;">2021</td>
+<td style="text-align: center;">5.9</td>
+<td style="text-align: center;">After a chance encounter at a dog park, two Londoners discover the possibilities — and challenges — of late life romance.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Who Mislaid My Wife?</td>
+<td style="text-align: center;">1976</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">After finding a stranger in his home, a well-respected lawyer becomes obsessed with the idea that his wife is having an affair.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">First Voyage</td>
+<td style="text-align: center;">1980</td>
+<td style="text-align: center;">4.4</td>
+<td style="text-align: center;">After their mother’s death, a teen girl and her 5-year-old brother embark on an emotional journey to find the father who abandoned them years before.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Blood Quantum</td>
+<td style="text-align: center;">2019</td>
+<td style="text-align: center;">5.6</td>
+<td style="text-align: center;">A troubled sheriff struggles to protect his Indigenous community as nonimmune outsiders seek refuge from a rising undead horde.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Tyler Perry's The Family That Preys</td>
+<td style="text-align: center;">2008</td>
+<td style="text-align: center;">3.5</td>
+<td style="text-align: center;">Wealthy socialite Charlotte and working-class Alice find their families at risk of being ripped apart by greed and scandal.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Soft &amp; Quiet</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">7.4</td>
+<td style="text-align: center;">Playing out in real time, a schoolteacher's mixer with like-minded women sparks a volatile chain of events when she encounters a face from her past.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">The Midnight Maiden War</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">A lonely outsider finds meaning — and first love — as part of a cryptic college club that organizes increasingly dangerous and destructive explosions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">City Hunter</td>
+<td style="text-align: center;">2018</td>
+<td style="text-align: center;">6.3</td>
+<td style="text-align: center;">An elite bodyguard and notorious ladies' man must guard a perfume so potent it makes the wearer utterly irresistible to those who smell it.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Spellbound</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">Yuri's world is in shambles after a tragic incident leaves her constantly haunted by ghosts — until a charming magician enters her life.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Repulse</td>
+<td style="text-align: center;">2021</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Two very different yet equally dysfunctional families — one affluent, one destitute — share a grim, destructive bond forged in pain, trauma and abuse.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Alberto Tomba: vincere in salita</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">The iconic alpine ski racer reflects on his childhood in Emilia-Romagna, his triumphs in international competitions and his life beyond the slopes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">The Tribe</td>
+<td style="text-align: center;">1991</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">While in the emergency room, a young doctor witnesses a shocking death that leads him down a rabbit hole of sinister politics and reckless corruption.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">The Winner</td>
+<td style="text-align: center;">1979</td>
+<td style="text-align: center;">6.2</td>
+<td style="text-align: center;">When a young plumber meets the woman of his dreams, the only obstacle is her family — and her fiancé. But the tables turn after he wins the lottery.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Two of a Kind: A Love Story</td>
+<td style="text-align: center;">1981</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Love blossoms between two misfits when a bookstore owner discovers the gentle side of a famously fearsome wrestler who literally lands in her lap.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Always Alone</td>
+<td style="text-align: center;">1991</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Prodigal son Rudi returns home from prison to make life even more chaotic for his dozen family members sharing a tiny, hopelessly cramped apartment.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">V for Vengeance</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">3.7</td>
+<td style="text-align: center;">Two estranged vampire sisters join forces to rescue their long-lost sibling and take down the bloodthirsty clan that murdered their parents.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Hoping for Good News</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">When an ex-girlfriend’s threat forces him to flee his own engagement party, Bulut embarks on a chaotic road adventure — with the police in hot pursuit.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Crawlspace</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">5.3</td>
+<td style="text-align: center;">After a plumber witnesses two poachers commit a brutal murder in a remote Oregon cabin, he finds himself fighting for his own life.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Mrs.&nbsp;Harris Goes to Paris</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">7.1</td>
+<td style="text-align: center;">Dreaming of buying a Dior gown, an irrepressible London house cleaner brightens the lives of those around her on a life-changing Parisian vacation.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID2: Shadwell Army</td>
+<td style="text-align: center;">2016</td>
+<td style="text-align: center;">4.6</td>
+<td style="text-align: center;">In this follow-up to the 1995 football hooligan film, a cop goes undercover to infiltrate a violent gang associated with a London football club.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Muoi: The Curse Returns</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">An art curator reunites with an old friend at an isolated villa, where they discover a cursed portrait concealing a malevolent spirit.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Boy from the Blaze</td>
+<td style="text-align: center;">2020</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">After surviving a horrific fire, teen Aleixo Paz grapples with pain through his songwriting. In this documentary, he takes the stage for the first time.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4EVE The 1st Concert Friends &amp; Family</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Girl group 4EVE takes the stage at a packed Queen Sirikit National Convention Center in Bangkok for their first concert in front of adoring fans.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">OK Jaanu</td>
+<td style="text-align: center;">2017</td>
+<td style="text-align: center;">5.2</td>
+<td style="text-align: center;">A marriage-averse duo decides to cohabitate until their careers send them to different countries. The plan seems logical — until real love develops.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Badrinath Ki Dulhania</td>
+<td style="text-align: center;">2017</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">The entitled son of a wealthy patriarch pursues a driven young woman, but is in for a powerful lesson when she challenges his assumptions about marriage.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Ae Dil Hai Mushkil</td>
+<td style="text-align: center;">2016</td>
+<td style="text-align: center;">5.8</td>
+<td style="text-align: center;">After crossing paths as students in London, Ayan and Alizeh navigate a journey of friendship, love and heartbreak that turns their worlds upside down.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">AKA</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">6.3</td>
+<td style="text-align: center;">A steely special ops agent finds his morality put to the test when he infiltrates a crime syndicate and unexpectedly bonds with the boss' young son.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Pretty Young Thing</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Frida and Selma navigate the intricate initiation rites at their new high school, where being invited to a notorious party means instant popularity.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Before Life After Death</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">9.2</td>
+<td style="text-align: center;">With nowhere to turn, a pregnant student finds refuge and companionship with a gynecologist, who is mourning the death of her only daughter.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">It's Us</td>
+<td style="text-align: center;">2013</td>
+<td style="text-align: center;">7.3</td>
+<td style="text-align: center;">When rumors and stereotypes dangerously disrupt a harmonious Kenyan community, residents must decide whether to succumb to turmoil — or rise above it.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Guy</td>
+<td style="text-align: center;">2019</td>
+<td style="text-align: center;">6.7</td>
+<td style="text-align: center;">Discovering that he's the illegitimate son of a famed singer, a young reporter follows his father on tour without revealing his true identity.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">The Awkward Weekend</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">A weekend devoted to honoring their deceased friend takes an awkward turn when a surprise guest puts a once tight-knit group at odds with each other.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">The Matchmaker</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">6.5</td>
+<td style="text-align: center;">When an office worker becomes powerfully infatuated with his beautiful intern, he follows her to a desert resort overrun with bizarre forces.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Tha Rae United</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">A teen football club just can't seem to win, until a former national player joins the lineup and teaches them how to put their heart into the game.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Like &amp; Share</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">8.2</td>
+<td style="text-align: center;">Two best friends who create ASMR content together discover a world of personal exploration that leads them both toward harrowing outcomes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Dasara (Kannada)</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Amid the daily grind in a coal mining town, politics and power dynamics take a dangerous toll on a love triangle between three longtime friends.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Dasara (Malayalam)</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Amid the daily grind in a coal mining town, politics and power dynamics take a dangerous toll on a love triangle between three longtime friends.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Dasara (Tamil)</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Amid the daily grind in a coal mining town, politics and power dynamics take a dangerous toll on a love triangle between three longtime friends.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Dasara</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">Amid the daily grind in a coal mining town, politics and power dynamics take a dangerous toll on a love triangle between three longtime friends.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Paws of Fury: The Legend of Hank</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">5.7</td>
+<td style="text-align: center;">A young dog who dreams of being a samurai faces prejudice and a steep learning curve when he's pulled into a plot to wipe a town of cats off the map.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Kiss, Kiss!</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">Convinced he can charm any woman, a tenacious flirt sets his sights on a headstrong bride-to-be engaged to the son of an ambitious politician.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">State of Grace</td>
+<td style="text-align: center;">1986</td>
+<td style="text-align: center;">7.2</td>
+<td style="text-align: center;">A socialist politician and a conservative businesswoman refuse to let differing beliefs — or a marriage — get in the way of their budding romance.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Tight Skirts, Loose Pleasures</td>
+<td style="text-align: center;">1965</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">When her client dies of a heart attack, a young sex worker meets an unlikely ally who wants to help her escape the clutches of a vengeful racketeer.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">The Light We Carry: Michelle Obama and Oprah Winfrey</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Michelle Obama delves into the challenges and life lessons that shaped her second bestselling book in an illuminating conversation with Oprah Winfrey.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">John Mulaney: Baby J</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">A chaotic intervention. An action packed stay in rehab. After a weird couple of years, John Mulaney comes out swinging in his return to the stage.</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Men of Deeds</td>
+<td style="text-align: center;">2022</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">After a police officer accidentally becomes an accomplice to a crime, he must decide whether to stand up to local corruption taking over his town.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Write the table to a CSV file</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">write.csv</span>(movies_df, <span class="at">file =</span> <span class="st">"netflix_movies.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Challenge 2</p>
+<p><strong>Scrape one of the competitor websites of canyon (either https://www.rosebikes.de/ or https://www.radon-bikes.de) and create a small database. The database should contain the model names and prices for at least one category. Use the selectorgadget to get a good understanding of the website structure, it is really helpful. After scraping your data, convert it to a readable format. Prices should be in a numeric format without any other letters or symbols. Also check if the prices are reasonable.</strong></p>
+<p><em>I opted for radon-bikes.de I used the SelectorGadget extension from Chrome and the Inspect Tool to get the CSS elements I needed and</em> <em>I used regex to extract the main category and subcategories from the URLs. Then I used knitr and kable to get a nice table</em></p>
+<div class="cell" data-hash="02_data_acquisition_cache/html/unnamed-chunk-2_4fc1a23019de24c60343966c3010e2ab">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># WEBSCRAPING ----</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># 1.0 LIBRARIES ----</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Define the URLs for each category and subcategory</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>urls <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb3-10"><a href="#cb3-10"></a>  <span class="st">"https://www.radon-bikes.de/en/mountainbike/hardtail/"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="st">"https://www.radon-bikes.de/en/mountainbike/fullsuspension/"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12"></a>  <span class="st">"https://www.radon-bikes.de/en/trekking-cross/trekking/"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>  <span class="st">"https://www.radon-bikes.de/en/trekking-cross/cross/"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14"></a>  <span class="st">"https://www.radon-bikes.de/en/e-bike/mountainbike/"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15"></a>  <span class="st">"https://www.radon-bikes.de/en/e-bike/trekking/"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="st">"https://www.radon-bikes.de/en/roadbike/carbon/"</span>,</span>
+<span id="cb3-17"><a href="#cb3-17"></a>  <span class="st">"https://www.radon-bikes.de/en/roadbike/alu/"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18"></a>  <span class="st">"https://www.radon-bikes.de/en/roadbike/gravel/"</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a>)</span>
+<span id="cb3-20"><a href="#cb3-20"></a></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co"># Initialize an empty list to store the data for each category and subcategory</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a>bike_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb3-23"><a href="#cb3-23"></a></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="co"># Iterate through each URL</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="cf">for</span> (url <span class="cf">in</span> urls) {</span>
+<span id="cb3-26"><a href="#cb3-26"></a></span>
+<span id="cb3-27"><a href="#cb3-27"></a>  <span class="co"># Get the HTML content from the URL</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a>  html_content <span class="ot">&lt;-</span> <span class="fu">read_html</span>(url)</span>
+<span id="cb3-29"><a href="#cb3-29"></a></span>
+<span id="cb3-30"><a href="#cb3-30"></a>  <span class="co"># Extract the category and subcategory from the URL</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>  category <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"^.*/([^/]+)/([^/]+)/?$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, url)</span>
+<span id="cb3-32"><a href="#cb3-32"></a>  subcategory <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"^.*/([^/]+)/([^/]+)/?$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">2"</span>, url)</span>
+<span id="cb3-33"><a href="#cb3-33"></a></span>
+<span id="cb3-34"><a href="#cb3-34"></a>  <span class="co"># Extract the bike names and prices from the HTML content</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a>  bike_names <span class="ot">&lt;-</span> html_content <span class="sc">%&gt;%</span> <span class="fu">html_nodes</span>(<span class="st">".mod-serienpanel .a-heading--medium"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
+<span id="cb3-36"><a href="#cb3-36"></a>  prices <span class="ot">&lt;-</span> html_content <span class="sc">%&gt;%</span></span>
+<span id="cb3-37"><a href="#cb3-37"></a>    <span class="fu">html_nodes</span>(<span class="st">".info .currentPrice"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-38"><a href="#cb3-38"></a>    <span class="fu">html_text</span>()</span>
+<span id="cb3-39"><a href="#cb3-39"></a></span>
+<span id="cb3-40"><a href="#cb3-40"></a>  <span class="co"># Remove any empty prices</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a>  prices <span class="ot">&lt;-</span> prices[prices <span class="sc">!=</span> <span class="st">""</span>]</span>
+<span id="cb3-42"><a href="#cb3-42"></a></span>
+<span id="cb3-43"><a href="#cb3-43"></a>  <span class="co"># Create a data frame for the subcategory with the bike names and prices</span></span>
+<span id="cb3-44"><a href="#cb3-44"></a>  subcategory_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">bike_name =</span> bike_names[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(prices)], <span class="at">price =</span> prices)</span>
+<span id="cb3-45"><a href="#cb3-45"></a></span>
+<span id="cb3-46"><a href="#cb3-46"></a>  <span class="co"># Add the subcategory data frame to the bike_list with the corresponding category and subcategory names</span></span>
+<span id="cb3-47"><a href="#cb3-47"></a>  bike_list[[<span class="fu">paste0</span>(category, <span class="st">"_"</span>, subcategory)]] <span class="ot">&lt;-</span> subcategory_df</span>
+<span id="cb3-48"><a href="#cb3-48"></a></span>
+<span id="cb3-49"><a href="#cb3-49"></a>}</span>
+<span id="cb3-50"><a href="#cb3-50"></a></span>
+<span id="cb3-51"><a href="#cb3-51"></a><span class="co"># Combine all the data frames in the bike_list into one data frame</span></span>
+<span id="cb3-52"><a href="#cb3-52"></a>bike_df <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, bike_list)</span>
+<span id="cb3-53"><a href="#cb3-53"></a></span>
+<span id="cb3-54"><a href="#cb3-54"></a><span class="co"># Add a column for the category and subcategory names</span></span>
+<span id="cb3-55"><a href="#cb3-55"></a>bike_df<span class="sc">$</span>category <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"_.*"</span>, <span class="st">""</span>, <span class="fu">rownames</span>(bike_df))</span>
+<span id="cb3-56"><a href="#cb3-56"></a>bike_df<span class="sc">$</span>subcategory <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">".*_"</span>, <span class="st">""</span>, <span class="fu">rownames</span>(bike_df))</span>
+<span id="cb3-57"><a href="#cb3-57"></a></span>
+<span id="cb3-58"><a href="#cb3-58"></a><span class="co"># Reorder the columns</span></span>
+<span id="cb3-59"><a href="#cb3-59"></a>bike_df <span class="ot">&lt;-</span> bike_df[,<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>)]</span>
+<span id="cb3-60"><a href="#cb3-60"></a></span>
+<span id="cb3-61"><a href="#cb3-61"></a><span class="co"># Print the resulting data frame</span></span>
+<span id="cb3-62"><a href="#cb3-62"></a><span class="co"># bike_df</span></span>
+<span id="cb3-63"><a href="#cb3-63"></a></span>
+<span id="cb3-64"><a href="#cb3-64"></a><span class="co"># Display dataframe as a table using kable()</span></span>
+<span id="cb3-65"><a href="#cb3-65"></a>bike_table <span class="ot">&lt;-</span> <span class="fu">kable</span>(bike_df, <span class="at">format =</span> <span class="st">"markdown"</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">align =</span> <span class="st">"c"</span>, <span class="at">col.names =</span> <span class="fu">toupper</span>(<span class="fu">colnames</span>(bike_df)), <span class="at">space =</span> <span class="st">"small"</span>, <span class="at">row.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb3-66"><a href="#cb3-66"></a></span>
+<span id="cb3-67"><a href="#cb3-67"></a>bike_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead><tr class="header">
+<th style="text-align: center;">CATEGORY</th>
+<th style="text-align: center;">SUBCATEGORY</th>
+<th style="text-align: center;">BIKE_NAME</th>
+<th style="text-align: center;">PRICE</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">hardtail.1</td>
+<td style="text-align: center;">JEALOUS</td>
+<td style="text-align: center;">2520.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">hardtail.2</td>
+<td style="text-align: center;">JEALOUS AL</td>
+<td style="text-align: center;">1007.56</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">hardtail.3</td>
+<td style="text-align: center;">CRAGGER</td>
+<td style="text-align: center;">1175.63</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">hardtail.4</td>
+<td style="text-align: center;">ZR TEAM</td>
+<td style="text-align: center;">629.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">hardtail.5</td>
+<td style="text-align: center;">ZR LADY</td>
+<td style="text-align: center;">503.36</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">hardtail.6</td>
+<td style="text-align: center;">SLUSH Frameset</td>
+<td style="text-align: center;">251.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">fullsuspension.1</td>
+<td style="text-align: center;">SKEEN TRAIL AL</td>
+<td style="text-align: center;">1427.73</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">fullsuspension.2</td>
+<td style="text-align: center;">SKEEN TRAIL</td>
+<td style="text-align: center;">1931.93</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">fullsuspension.3</td>
+<td style="text-align: center;">SLIDE TRAIL AL</td>
+<td style="text-align: center;">1478.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">fullsuspension.4</td>
+<td style="text-align: center;">SLIDE TRAIL</td>
+<td style="text-align: center;">2520.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">fullsuspension.5</td>
+<td style="text-align: center;">JAB</td>
+<td style="text-align: center;">2184.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">fullsuspension.6</td>
+<td style="text-align: center;">SWOOP AL</td>
+<td style="text-align: center;">2520.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">mountainbike</td>
+<td style="text-align: center;">fullsuspension.7</td>
+<td style="text-align: center;">SWOOP</td>
+<td style="text-align: center;">2352.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">trekking-cross</td>
+<td style="text-align: center;">trekking.1</td>
+<td style="text-align: center;">SOLUTION COMFORT</td>
+<td style="text-align: center;">587.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">trekking-cross</td>
+<td style="text-align: center;">trekking.2</td>
+<td style="text-align: center;">SUNSET</td>
+<td style="text-align: center;">1259.66</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">trekking-cross</td>
+<td style="text-align: center;">cross</td>
+<td style="text-align: center;">SCART LIGHT</td>
+<td style="text-align: center;">503.36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">e-bike</td>
+<td style="text-align: center;">mountainbike.1</td>
+<td style="text-align: center;">RENDER AL</td>
+<td style="text-align: center;">3360.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">e-bike</td>
+<td style="text-align: center;">mountainbike.2</td>
+<td style="text-align: center;">RENDER</td>
+<td style="text-align: center;">4200.84</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">e-bike</td>
+<td style="text-align: center;">mountainbike.3</td>
+<td style="text-align: center;">DEFT</td>
+<td style="text-align: center;">4032.77</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">e-bike</td>
+<td style="text-align: center;">mountainbike.4</td>
+<td style="text-align: center;">JEALOUS HYBRID</td>
+<td style="text-align: center;">2100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">e-bike</td>
+<td style="text-align: center;">mountainbike.5</td>
+<td style="text-align: center;">ZR TEAM HYBRID CX</td>
+<td style="text-align: center;">1427.73</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">e-bike</td>
+<td style="text-align: center;">mountainbike.6</td>
+<td style="text-align: center;">ZR LADY HYBRID CX</td>
+<td style="text-align: center;">1931.93</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">e-bike</td>
+<td style="text-align: center;">trekking.1</td>
+<td style="text-align: center;">RELATE</td>
+<td style="text-align: center;">2688.24</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">e-bike</td>
+<td style="text-align: center;">trekking.2</td>
+<td style="text-align: center;">SOLUTION HYBRID</td>
+<td style="text-align: center;">1931.93</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">roadbike</td>
+<td style="text-align: center;">carbon.1</td>
+<td style="text-align: center;">SPIRE DISC CARBON</td>
+<td style="text-align: center;">1763.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">roadbike</td>
+<td style="text-align: center;">carbon.2</td>
+<td style="text-align: center;">VAILLANT DISC CARBON</td>
+<td style="text-align: center;">2688.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">roadbike</td>
+<td style="text-align: center;">alu</td>
+<td style="text-align: center;">R1</td>
+<td style="text-align: center;">1091.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">roadbike</td>
+<td style="text-align: center;">gravel</td>
+<td style="text-align: center;">REGARD</td>
+<td style="text-align: center;">1091.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Whether or not the prices are reasonable depends entirely on the person 99% of the time, but if we were to compare the prices of the bikes from all those categories to the price range of similar bikes from other sources in Germany, then the prices are entirely reasonable.</p>
+<p>Average prices in Germany in EUR for different categories:</p>
+<ul>
+<li>Mountain Bikes: 500-3000€ [2]</li>
+<li>E-Bikes: 1000-4000€ [1]</li>
+<li>Trekking and Cross bikes: 500-2000€ [2]</li>
+<li>Road Bikes: 1000-3000€ [1]</li>
+</ul>
+<ol type="1">
+<li>Bicycles and MTBs designed in Germany | GHOST bikes. https://www.ghost-bikes.com/int-en/bikes/.</li>
+<li>Bike E-Bike Online Shop | Bike-Discount. https://www.bike-discount.de/en/ebike.</li>
+<li>We’ve got your Bike | RABE Bike. https://www.rabe-bike.de/en.</li>
+</ol>
+<p>Based on this information, we can say definitively that the prices for the various bikes across all categories on radon-bikes.de are reasonable.</p>
+<p>End of Data Acquisition Challenge</p>
 
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You can delete everything in here and start fresh.</p>
-</div>
-</div>
 
 
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
