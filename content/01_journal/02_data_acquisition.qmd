@@ -1,8 +1,153 @@
 ---
 title: "Data Acquisition"
-author: "Joschka Schwarz"
+author: "Fadel Victor Shanaa"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+Challenge 1
+
+**Get some data via an API. There are millions of providers, that offer API access for free and have good documentation about how to query their service. You just have to google them. You can use whatever service you want. For example, you can get data about your listening history (spotify), get data about flights (skyscanner) or just check the weather forecast. Print the data in a readable format, e.g. a table if you want, you could also plot it**
+
+
+*For this challenge, I decided to obtain netflix movie data. I replaced all missing ratings with N/A. I kept it simple to 4 columns: title, year, rating, synopsis*
+
+```{r}
+
+# load the libraries
+library(httr)
+library(jsonlite)
+library(lubridate)
+library(knitr)
+library(markdown)
+
+#specify the url and what we are accessing
+url <- "https://unogs-unogs-v1.p.rapidapi.com/search/titles"
+
+queryString <- list(
+  order_by = "date",
+  type = "movie"
+)
+
+# retrieve the API Key
+api_key = Sys.getenv("X-RapidAPI-Key")
+
+# Get the response as a JSON output
+response <- VERB("GET", url, query = queryString, add_headers('X-RapidAPI-Key' = api_key, 'X-RapidAPI-Host' = 'unogs-unogs-v1.p.rapidapi.com'), content_type("application/octet-stream"))
+
+# Convert that JSON response to a list
+response_list <- fromJSON(content(response, "text"))
+
+# Convert extract the dataframe of results we want
+movies_df <- response_list[[2]]
+
+# Filter the dataframe
+movies_df <- movies_df[, c("title", "year", "rating", "synopsis")]
+
+# Replace empty ratings with N/A
+movies_df$rating <- ifelse(is.na(movies_df$rating), "N/A", movies_df$rating)
+movies_df$rating[movies_df$rating == ""] <- "N/A"
+
+# create a table with kable
+movies_table <- kable(movies_df, format = "markdown", booktabs = TRUE, align = "c", col.names = toupper(colnames(movies_df)), space = "small")
+
+# Display the Table
+movies_table
+
+# Write the table to a CSV file
+write.csv(movies_df, file = "netflix_movies.csv", row.names = FALSE)
+```
+
+
+Challenge 2
+
+**Scrape one of the competitor websites of canyon (either https://www.rosebikes.de/ or https://www.radon-bikes.de) and create a small database. The database should contain the model names and prices for at least one category. Use the selectorgadget to get a good understanding of the website structure, it is really helpful. After scraping your data, convert it to a readable format. Prices should be in a numeric format without any other letters or symbols. Also check if the prices are reasonable.**
+
+*I opted for radon-bikes.de I used the SelectorGadget extension from Chrome and the Inspect Tool to get the CSS elements I needed and*
+*I used regex to extract the main category and subcategories from the URLs. Then I used knitr and kable to get a nice table*
+
+```{r}
+# WEBSCRAPING ----
+
+# 1.0 LIBRARIES ----
+
+library(rvest)
+library(knitr)
+
+# Define the URLs for each category and subcategory
+urls <- c(
+  "https://www.radon-bikes.de/en/mountainbike/hardtail/",
+  "https://www.radon-bikes.de/en/mountainbike/fullsuspension/",
+  "https://www.radon-bikes.de/en/trekking-cross/trekking/",
+  "https://www.radon-bikes.de/en/trekking-cross/cross/",
+  "https://www.radon-bikes.de/en/e-bike/mountainbike/",
+  "https://www.radon-bikes.de/en/e-bike/trekking/",
+  "https://www.radon-bikes.de/en/roadbike/carbon/",
+  "https://www.radon-bikes.de/en/roadbike/alu/",
+  "https://www.radon-bikes.de/en/roadbike/gravel/"
+)
+
+# Initialize an empty list to store the data for each category and subcategory
+bike_list <- list()
+
+# Iterate through each URL
+for (url in urls) {
+
+  # Get the HTML content from the URL
+  html_content <- read_html(url)
+
+  # Extract the category and subcategory from the URL
+  category <- sub("^.*/([^/]+)/([^/]+)/?$", "\\1", url)
+  subcategory <- sub("^.*/([^/]+)/([^/]+)/?$", "\\2", url)
+
+  # Extract the bike names and prices from the HTML content
+  bike_names <- html_content %>% html_nodes(".mod-serienpanel .a-heading--medium") %>% html_text()
+  prices <- html_content %>%
+    html_nodes(".info .currentPrice") %>%
+    html_text()
+
+  # Remove any empty prices
+  prices <- prices[prices != ""]
+
+  # Create a data frame for the subcategory with the bike names and prices
+  subcategory_df <- data.frame(bike_name = bike_names[1:length(prices)], price = prices)
+
+  # Add the subcategory data frame to the bike_list with the corresponding category and subcategory names
+  bike_list[[paste0(category, "_", subcategory)]] <- subcategory_df
+
+}
+
+# Combine all the data frames in the bike_list into one data frame
+bike_df <- do.call(rbind, bike_list)
+
+# Add a column for the category and subcategory names
+bike_df$category <- gsub("_.*", "", rownames(bike_df))
+bike_df$subcategory <- gsub(".*_", "", rownames(bike_df))
+
+# Reorder the columns
+bike_df <- bike_df[,c(3,4,1,2)]
+
+# Print the resulting data frame
+# bike_df
+
+# Display dataframe as a table using kable()
+bike_table <- kable(bike_df, format = "markdown", booktabs = TRUE, align = "c", col.names = toupper(colnames(bike_df)), space = "small", row.names=FALSE)
+
+bike_table
+```
+
+Whether or not the prices are reasonable depends entirely on the person 99% of the time, but if we were to compare the prices of the bikes from all those categories
+to the price range of similar bikes from other sources in Germany, then the prices are entirely reasonable.
+
+Average prices in Germany in EUR for different categories:
+
+- Mountain Bikes: 500-3000€ [2]
+- E-Bikes: 1000-4000€ [1]
+- Trekking and Cross bikes: 500-2000€ [2]
+- Road Bikes: 1000-3000€ [1]
+
+(1) Bicycles and MTBs designed in Germany | GHOST bikes. https://www.ghost-bikes.com/int-en/bikes/.
+(2) Bike E-Bike Online Shop | Bike-Discount. https://www.bike-discount.de/en/ebike.
+(3) We've got your Bike | RABE Bike. https://www.rabe-bike.de/en.
+
+Based on this information, we can say definitively that the prices for the various bikes across all categories on radon-bikes.de are reasonable.
+
+End of Data Acquisition Challenge

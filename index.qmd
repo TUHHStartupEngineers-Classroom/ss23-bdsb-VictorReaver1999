@@ -8,4 +8,8 @@ author: "Fadel Victor Shanaa"
 
 This is my data science journal where you will see the code and results of various projects or tasks.
 
-There are 5 parts to it in total
+There are 5 parts to it in total.
+
+1 - Tidyverse Introduction + Challenge
+
+2 - Data Acquisition + Challenge
