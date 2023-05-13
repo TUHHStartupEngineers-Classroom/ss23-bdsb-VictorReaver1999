@@ -550,8 +550,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>This is the base code of the Tidyverse section of this course. The steps are as follows: a) Load libraries b) Load the raw data c) Examine data d) Join data as per the instructions e) Wrangle it in order to prepare it for analysis f) Extract business insights through visualization g) Store the wrangled data as xlsx, csv, and rds files</p>
 <p>Part F is the most interesting bit here since this is the ultimate goal of any Data Analysis project which is extracting insights and telling a story</p>
-<p>The results of the first visualization are shown below which shows the trend line of the sales by year analysis. What we can tell is that the trend line is positive and that sales continously rose from 2016 to 2019 barring the year 2018 <a href="../../assets/img/sales_by_year_plot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Revenue by Year"><img src="../../assets/img/sales_by_year_plot.png" class="img-fluid" alt="Revenue by Year"></a> The results of the second visualization are shown below which shows the revenue by year and by category simultaneously. We can see that Road and Mountain bikes are best sellers regardless of year and that demand for them is always high</p>
-<p><a href="../../assets/img/revenue_by_year_and_category.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Revenue by Year and Main Category"><img src="../../assets/img/revenue_by_year_and_category.png" class="img-fluid" alt="Revenue by Year and Main Category"></a> Part 2:</p>
+<p>The results of the first visualization are shown below which shows the trend line of the sales by year analysis. What we can tell is that the trend line is positive and that sales continously rose from 2016 to 2019 barring the year 2018 <a href="../../assets/img/sales_by_year_plot.png" class="lightbox" title="Revenue by Year" data-gallery="quarto-lightbox-gallery-3"><img src="../../assets/img/sales_by_year_plot.png" class="img-fluid" alt="Revenue by Year"></a> The results of the second visualization are shown below which shows the revenue by year and by category simultaneously. We can see that Road and Mountain bikes are best sellers regardless of year and that demand for them is always high</p>
+<p><a href="../../assets/img/revenue_by_year_and_category.png" class="lightbox" title="Revenue by Year and Main Category" data-gallery="quarto-lightbox-gallery-4"><img src="../../assets/img/revenue_by_year_and_category.png" class="img-fluid" alt="Revenue by Year and Main Category"></a> Part 2:</p>
 <p>This next part is the challenge from the tidyverse chapter. The first part of the challenge is as follows:</p>
 <p><strong>Analyze the sales by location (state) with a bar plot. Since state and city are multiple features (variables), they should be split. Which state has the highes revenue? Replace your bike_orderlines_wrangled_tbl object with the newly wrangled object (with the columns state and city).</strong></p>
 <p><strong>Hint: Add + theme(axis.text.x = element_text(angle = 45, hjust = 1)) to your plotting code to rotate your x-axis labels. Probably you have to resize the viewer pane to show the entire plot. For your website, try different values for fig.width and fig.height in your markdown document.</strong></p>
@@ -580,7 +580,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The results of that challenge are seen below. We split the location by city and state and then grouped all the sales data by state. The state that sold the most bikes is North Rhine Westphalia.</p>
 <p>This could be caused by the presence of mountains and hills in North Rhine-Westphalia. The highest mountain in the state is the Langenberg, which is part of the Rothaar Mountains and has an elevation of 843 meters (2,766 feet). The Sauerland region, located in the eastern part of North Rhine-Westphalia, is also known for its hilly terrain and scenic landscapes. Additionally, there are several other smaller mountain ranges in the state, including the Ebbegebirge, the Wiehengebirge, and the Teutoburg Forest.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="../../assets/img/sales_by_state.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Total Revenue by State"><img src="../../assets/img/sales_by_state.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="../../assets/img/sales_by_state.png" class="lightbox" title="Total Revenue by State" data-gallery="quarto-lightbox-gallery-5"><img src="../../assets/img/sales_by_state.png" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">Total Revenue by State</figcaption><p></p>
 </figure>
 </div>
@@ -622,7 +622,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>The results are below:</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="../../assets/img/sales_year_state/sales_by_location_and_year.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Sales by Location and Year"><img src="../../assets/img/sales_year_state/sales_by_location_and_year.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="../../assets/img/sales_year_state/sales_by_location_and_year.png" class="lightbox" title="Sales by Location and Year" data-gallery="quarto-lightbox-gallery-7"><img src="../../assets/img/sales_year_state/sales_by_location_and_year.png" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">Sales by Location and Year</figcaption><p></p>
 </figure>
 </div>
@@ -880,7 +880,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":true,"descPosition":"bottom","openEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":true});</script>
 
 
 </body></html>

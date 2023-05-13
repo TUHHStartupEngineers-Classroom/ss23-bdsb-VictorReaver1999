@@ -13,3 +13,7 @@ There are 5 parts to it in total.
 1 - Tidyverse Introduction + Challenge
 
 2 - Data Acquisition + Challenge
+
+3 - Data Wrangling + Challenge
+
+4 - Data Visualization + Challenge
