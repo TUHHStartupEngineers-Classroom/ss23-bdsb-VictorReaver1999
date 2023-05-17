@@ -147,4 +147,4 @@ ggplot() +
   theme_void()
 ```
 
-End of Data Visualization Challenge
+End of Data Visualization Chapter and Challenge
