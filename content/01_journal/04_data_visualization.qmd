@@ -1,8 +1,150 @@
 ---
 title: "Data Visualization"
-author: "Joschka Schwarz"
+author: "Fadel Victor Shanaa"
 ---
+**Challenge 5**
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+**Part 1:**
+
+*Goal: Map the time course of the cumulative Covid-19 cases! Your plot should look like this*
+![Cumulative COVID-19 Data](challenge_1.png)
+*Adding the cases for Europe is optional. You can choose your own color theme, but don’t use the default one. Don’t forget to scale the axis properly. The labels can be added with geom_label() or with geom_label_repel() (from the package ggrepel).*
+
+**My Code and Result:**
+```{r}
+# Challenge 5
+
+# Part 1
+
+# Import Libraries
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+library(RColorBrewer)
+library(dplyr)
+library(scales)
+
+# Read the dataset
+covid_data_tbl <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+
+# Selecting only the required columns
+covid_data_tbl <- select(covid_data_tbl, location, date, total_cases)
+
+# Filtering for the five countries
+filtered_tbl <- filter(covid_data_tbl, location %in% c("United States", "United Kingdom", "Spain", "France", "Germany"))
+
+# Remove rows with NA values in total_cases column
+filtered_tbl <- na.omit(filtered_tbl)
+
+# Convert the date column to the proper Date format
+filtered_tbl$date <- as.Date(filtered_tbl$date)
+
+# Filter the data for the desired time range
+filtered_tbl <- filtered_tbl %>%
+  filter(date >= as.Date("2020-01-01") & date <= as.Date("2022-04-19"))
+
+# Aggregate the cumulative cases by date and location
+aggregated_data <- filtered_tbl %>%
+  group_by(location, date) %>%
+  summarise(cumulative_cases = sum(total_cases)) %>%
+  ungroup()
+
+# Plot the cumulative cases over time using a line plot
+ggplot(aggregated_data, aes(x = date, y = cumulative_cases, color = location)) +
+  geom_line(linewidth = 0.8) +
+  geom_label(data = filter(aggregated_data, location == "United States" & date == max(date)),
+             aes(label = comma(cumulative_cases)), hjust = 1, vjust = 0, color = "black", fill = "white",
+             size = 3, label.padding = unit(0.25, "lines"), label.r = unit(0.15, "lines")) +
+  labs(x = "", y = "Cumulative Cases", color = "Country", title = "COVID-19 confirmed cases worldwide",
+       subtitle = "As of 19-04-2022") +
+  theme_minimal() +
+  scale_x_date(date_labels = "%b %Y", date_breaks = "1 month") +
+  scale_y_continuous(limits = c(0, 200000000), breaks = c(0, 50000000, 100000000, 150000000), 
+                     labels = c("0 M", "50 M", "100 M", "150 M")) +
+  theme(legend.position = "bottom") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_color_brewer(palette = "Dark2")
+```
+
+*The discrepancy in the cumulative COVID-19 cases in the US could stem from* 
+
+*either different sources of data being used or the data wrangling methods applied*
+
+**Part 2:**
+
+**Goal: Visualize the distribution of the mortality rate (deaths / population) with geom_map() (alternatively, you can plot the case-fatality rate (deaths / cases)). The necessary longitudinal and lateral data can be accessed with this function:**
+
+
+world <- map_data("world")
+This data has also to be put in the map argument of geom_map():
+
+plot_data %>% ggplot( ... ) +
+  geom_map(aes(map_id = ..., ... ), map = world, ... ) +
+  %>% 
+  mutate(location = case_when(
+
+    location == "United Kingdom" ~ "UK",
+    location == "United States" ~ "USA",
+    location == "Democratic Republic of Congo" ~ "Democratic Republic of the Congo",
+    TRUE ~ location
+
+  )) %>%
+  distinct()
+
+
+**My Code and Result: **
+```{r}
+# Part 2
+
+# Import Libraries
+
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+library(maps)
+library(scales)
+
+# Load the world map data
+world <- map_data("world")
+
+# Read the dataset
+covid_data_tbl <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+
+# Filter out unnecessary cols
+covid_data_tbl <- covid_data_tbl %>%
+  select(location, date, total_deaths, total_cases, population)
+
+# Fix the country names
+covid_data_tbl <- covid_data_tbl %>%
+  mutate(location = case_when(
+    location == "United Kingdom" ~ "UK",
+    location == "United States" ~ "USA",
+    location == "Democratic Republic of Congo" ~ "Democratic Republic of the Congo",
+    TRUE ~ location
+  )) %>%
+  distinct()
+
+# Filter the data for the desired date
+target_date <- as.Date("2021-04-16")
+filtered_data <- covid_data_tbl %>%
+  filter(date == target_date)
+
+# Calculate mortality rate
+plot_data <- filtered_data %>% mutate(mortality_rate = total_deaths / population)
+
+# Join the datasets
+world_covid_data <- left_join(world, plot_data, by = c("region" = "location"))
+
+# Filter world_covid_data to only keep rows that correspond to locations in filtered_data
+world_covid_data <- world_covid_data %>% mutate(mortality_rate = mortality_rate * 100)
+
+# Plot the map
+ggplot() +
+  geom_polygon(data = world_covid_data, aes(x = long, y = lat, group = group, fill = mortality_rate)) +
+  scale_fill_gradient(name = "Mortality Rate", low = "lightpink", high = "darkred", na.value = "gray", limits = c(0, 0.7)) +
+  labs(title = paste("Distribution of Mortality Rate (As of", format(target_date, "%d/%m/%Y"), ")")) +
+  theme_void()
+```
+
+End of Data Visualization Chapter and Challenge

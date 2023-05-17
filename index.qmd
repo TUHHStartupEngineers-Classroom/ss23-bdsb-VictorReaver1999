@@ -1,21 +1,19 @@
 ---
-title: "My Lab Journal"
+title: "Data Science Journal"
 subtitle: "Business Data Science Basics"
-author: "Joschka Schwarz"
+author: "Fadel Victor Shanaa"
 ---
 
 ![](assets/logo/TIE_logo.svg){width=80% fig-align="center"}
 
-This is a template example for lab journaling. Students in the data science courses at the Institute of Entrepreneurship will use this template to learn R for business analytics. Students can replace this text as they wish.
+This is my data science journal where you will see the code and results of various projects or tasks.
 
-## How to use
+There are 5 parts to it in total.
 
-1. Accept the assignment and get your own github repo.
+1 - Tidyverse Introduction + Challenge
 
-2. Blog/journal what you are doing in R, by editing the `.qmd` files. 
+2 - Data Acquisition + Challenge
 
-3. See the links page for lots of helpful links on learning R.
+3 - Data Wrangling + Challenge
 
-4. Change everything to make it your own.
-
-5. Make sure to render you website everytime before you want to upload changes
+4 - Data Visualization + Challenge

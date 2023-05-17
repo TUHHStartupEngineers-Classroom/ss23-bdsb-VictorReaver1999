@@ -1,0 +1,9 @@
+# Text Formatting
+
+*italics* and **bold**
+
+superscript^2^ / subscript~2~
+
+~~strikethrough~~
+
+`verbatim code`

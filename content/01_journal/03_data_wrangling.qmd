@@ -1,8 +1,150 @@
 ---
 title: "Data Wrangling"
-author: "Joschka Schwarz"
+author: "Fadel Victor Shanaa"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+Challenge 
+
+**Patents offer a great opportunity for data analysis, because the data is public. PatentsView is one of USPTO’s (United States Patent and Trademark Office) new initiatives**
+**intended to increase the usability and value of patent data**
+
+**Please note, that the patent data provided by the USPTO is a very large data set that might overload your computer power. Therefore, we also provide a reduced data set that is filtered to the year 2014 only with less columns, so you are able to complete the task, if your computer can’t process the large original data file.** 
+
+**Alternative 1: The original USPTO data can be downloaded here:**
+https://patentsview.org/download/data-download-tables
+
+**Alternative 2: The reduced data set for the year 2014 can be downloaded here.**
+https://cloud.tuhh.de/index.php/s/sGZKmdfLfdZBFK9
+
+
+**Information about the data will be found here:**
+Patents_DB_dictionary_bulk_downloads.xlsx 
+
+**1) Patent Dominance: What US company / corporation has the most patents? List the 10 US companies with the most assigned/granted patents.**
+
+**2) Recent patent activity: What US company had the most patents granted in August 2014? List the top 10 companies with the most new granted patents for August 2014.**
+
+**3) Innovation in Tech: What is the most innovative tech sector? For the top 10 companies (worldwide) with the most patents, what are the top 5 USPTO tech main classes?**
+
+**Answer the question with data.table or dplyr. You will need the following tables for each question:**
+
+Question            Table
+   1	     assignee,patent_assignee
+   2	     assignee,patent_assignee,patent
+   3	     assignee,patent_assignee,uspc
+
+**Please note, that it is better to not upload the tables to your github repo due to their size.**
+
+```{r}
+# Data Wrangling
+
+# Import libraries
+library(data.table)
+library(knitr)
+
+# Import data
+assignee <- fread("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\patent_data_reduced\\assignee.tsv")
+patent_assignee <- fread("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\patent_data_reduced\\patent_assignee.tsv")
+patent <- fread("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\patent_data_reduced\\patent.tsv")
+uspc <- fread("C:\\Users\\fvsha\\Documents\\GitHub\\ss23-bdsb-VictorReaver1999\\patent_data_reduced\\uspc.tsv")
+
+
+# Question 1
+
+
+# Merge assignee and patent_assignee tables
+assignee_patent <- merge(assignee, patent_assignee, by.x = "id", by.y = "assignee_id")
+
+# Filter for US corporations only
+us_corp_patents <- assignee_patent[type == 2, .(num_patents = .N), by = organization]
+
+# Sort in descending order
+us_corp_patents <- us_corp_patents[order(-num_patents)]
+
+# Display the top 10 companies with the most patents
+us_corp_patents_10 <- us_corp_patents[1:10]
+kable(us_corp_patents_10, align="c", caption="Top 10 US Companies by Patents")
+
+# Question 2
+
+
+# Merge the patent_assignee and patent tables
+patent_merged <- merge(patent, patent_assignee, by.x = "id", by.y = "patent_id")
+
+# Extract the year and month from the date column
+patent_merged[, `:=`(year = year(date), month = month(date))]
+
+# Filter for August 2014
+patent_aug_2014 <- patent_merged[year == 2014 & month == 8]
+
+# Merge the assignee and patent_aug_2014 tables
+assignee_patent_aug_2014 <- merge(assignee, patent_aug_2014, by.x = "id", by.y = "assignee_id")
+
+# Filter for US corporations only
+us_corp_patents_aug_2014 <- assignee_patent_aug_2014[type == 2]
+
+# Count the number of patents for each organization
+num_patents_aug_2014 <- us_corp_patents_aug_2014[, .(num_patents = .N), by = organization]
+
+# Sort in descending order
+top_10_patents_aug_2014 <- num_patents_aug_2014[order(-num_patents)][1:10]
+
+# Display the top 10 companies with the most patents granted in August 2014
+kable(top_10_patents_aug_2014, align="c", caption="Top 10 US Companies by Patents in August of 2014")
+
+# Question 3
+
+
+# Count the number of patents for each assignee
+assignee_count <- patent_assignee[, .N, by = assignee_id]
+
+# Merge assignee and assignee_count to get the number of patents for each assignee
+assignee_count <- merge(assignee, assignee_count, by.x = "id", by.y = "assignee_id")
+
+# Filter for only the Corporations
+assignee_count <- assignee_count[type %in% c(2, 3)]
+
+# Join assignee_count and patent_assignee to get the number of patents for each US corporation/individual
+patent_count <- merge(assignee_count, patent_assignee, by.x = "id", by.y = "assignee_id")
+
+# Join patent_count and uspc to get the main class for each patent
+patent_class <- merge(patent_count, uspc, by = "patent_id")
+
+# Count the number of patents for each organization and sort by the number of patents
+company_count <- patent_class[, .N, by = c("type", "organization")]
+company_count <- company_count[type %in% c(2, 3)]
+company_count <- company_count[order(-N)]
+
+# Select the top 10 companies
+top_companies <- company_count[1:10]
+
+# Filter patent_class for the top 10 companies
+patent_class_top <- patent_class[patent_class$organization %in% top_companies$organization]
+
+# Count the number of patents for each main class and sort by the number of patents
+class_count <- patent_class_top[, .N, by = mainclass_id]
+class_count <- class_count[order(-N)]
+
+# Select the top 5 main classes
+top_classes <- class_count[1:5]
+
+# Order the patent_class by the number of patents for each company
+patent_class_ordered <- patent_class_top[order(-patent_class_top$N), ]
+
+# Print the top 10 companies with the most patents and the top 5 main classes for these companies
+kable(top_companies, align="c", caption="Top 10 Companies Worlwide by Total Patents")
+print(paste("The 5 main USPTO classes for the Top 10 Companies Worldwide are:", paste(top_classes$mainclass_id, collapse = ", ")))
+```
+
+*The main classes correspond to the following industries as per the USPTO:*
+
+- Mainclass_id 257: **ACTIVE SOLID-STATE DEVICES (E.G., TRANSISTORS, SOLID-STATE DIODES)**¹. This class covers devices that operate by the movement of charge carriers in solid materials, such as semiconductors. The industry related to this mainclass_id is the **electronics** industry, especially for applications involving **rectification, amplification, or switching** of electrical signals².
+- Mainclass_id 455: **TELECOMMUNICATIONS**³. This class covers devices and methods for transmitting and receiving information by electromagnetic waves, such as radio, microwave, or optical signals. The industry related to this mainclass_id is the **telecommunications** industry, especially for applications involving **wireless communication, broadcasting, or modulation** of signals.
+- Mainclass_id 370: **MULTIPLEX COMMUNICATIONS**. This class covers devices and methods for transmitting and receiving multiple signals over a single communication channel or medium, such as time division multiplexing, frequency division multiplexing, or code division multiplexing. The industry related to this mainclass_id is also the **telecommunications** industry, especially for applications involving **efficient use of bandwidth, network protocols, or error correction** of signals.
+- Mainclass_id 348: **TELEVISION**. This class covers devices and methods for transmitting and receiving images by electromagnetic waves or other means, such as video cameras, monitors, projectors, or video signal processing. The industry related to this mainclass_id is the **entertainment** industry, especially for applications involving **broadcasting, recording, or displaying** of video content.
+- Mainclass_id 709: **ELECTRICAL COMPUTERS AND DIGITAL PROCESSING SYSTEMS: MULTICOMPUTER DATA TRANSFERRING**. This class covers devices and methods for transferring data between multiple computers or processors in a networked system, such as routers, switches, servers, or distributed computing. The industry related to this mainclass_id is the **information technology** industry, especially for applications involving **data communication, network architecture, or cloud computing**.
+
+Sources:
+(1) Class Schedule for Class 257 ACTIVE SOLID-STATE DEVICES (E.G .... https://www.uspto.gov/web/patents/classification/uspc257/sched257.htm.
+(2) Class Definition for Class 257 - ACTIVE SOLID-STATE DEVICES (E.G .... https://www.uspto.gov/web/patents/classification/uspc257/defs257.htm.
+(3) Class 257: ACTIVE SOLID-STATE DEVICES (E.G., TRANSISTORS, SOLID-STATE .... https://www.uspto.gov/web/offices/ac/ido/oeip/taf/moc/257.htm.
